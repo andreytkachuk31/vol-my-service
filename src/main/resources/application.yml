@@ -1,0 +1,22 @@
+micronaut:
+  application:
+    name: vol-my-service
+  server:
+    cors:
+      enabled: true
+
+jackson:
+  bean-introspection-module: true
+
+datasources:
+  default:
+    driverClassName: 'org.postgresql.Driver'
+    url: ${DB_URL:`jdbc:postgresql://localhost:5432/vol-my-db`}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+liquibase:
+  enabled: true
+  datasources:
+    default:
+      change-log: 'classpath:db/liquibase-changelog.xml'

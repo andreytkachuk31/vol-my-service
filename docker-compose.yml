@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  vol-my-service:
+    container_name: vol-my-service
+    image: vol-my-service-image
+    build:
+      context: ./
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/vol-my-db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    restart: always
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_DB=vol-my-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    restart: always

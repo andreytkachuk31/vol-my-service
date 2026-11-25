@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.volmy
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [ annotation-api, data, data-jpa, hibernate-jpa, app-name, http-client, jackson-databind, java, java-application, junit, logback, maven, netty-server, readme, shade, yaml ]

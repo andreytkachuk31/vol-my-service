@@ -1,0 +1,22 @@
+Thumbs.db
+.DS_Store
+.gradle
+build/
+target/
+out/
+data/
+.data/
+.micronaut/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+.factorypath
+# Artisyn implementation harness: generated state
+.harness/state/objects/
+.harness/state/launch/runs/
+.harness/state/launch/reports/
+.harness/state/launch/package.local.json
