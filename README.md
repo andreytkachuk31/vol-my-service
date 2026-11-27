@@ -1,22 +1,37 @@
-## Micronaut 3.9.3 Documentation
-
-- [User Guide](https://docs.micronaut.io/3.9.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.9.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.9.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
-
+---
+type: Reference
+title: VolMy Service
+description: Entry point for local use and architecture documentation of the VolMy backend service.
+tags: [readme, project, api]
+generated: { by: artisyn-harness/4.2, at: 2026-11-27T13:34:23Z }
+updated: { by: artisyn-harness/4.2, at: 2026-11-27T14:00:59Z }
 ---
 
-- [Micronaut Maven Plugin documentation](https://micronaut-projects.github.io/micronaut-maven-plugin/latest/)
+# VolMy Service
 
-## Feature http-client documentation
+VolMy Service is a backend service for managing fundraising campaigns and donors. It provides donor and fundraising HTTP operations, workbook import, and lottery requests.
 
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+## Fundraising imports
 
-## Architecture
+Workbook imports keep the first occurrence of each exact name, skip names already in the repository, then call `saveAll` once for the new fundraisings. The database enforces name uniqueness; adding that constraint to a database with duplicate names fails during constraint creation. The changeset has no explicit duplicate precondition or custom reconciliation diagnostic. See [XLSX import behavior](docs/System%20Architecture%20%28LLD%29/VolMy%20API%20application/03%20XLSX%20Import.md).
 
-- [Target Architecture (HLD)](docs/Target%20Architecture%20(HLD)/README.md)
-- [Active HLD container: VolMy API application](docs/Target%20Architecture%20(HLD)/v1/Containers/VolMy%20API%20application.md)
-- [System Architecture (LLD)](docs/System%20Architecture%20(LLD)/README.md)
-- [VolMy API application component overview](docs/System%20Architecture%20(LLD)/VolMy%20API%20application/component-overview.md)
+## Run locally
 
+The Docker image uses the Maven-built application jar. Build it first, then start the API application and PostgreSQL services from the project root:
+
+```sh
+mvn package
+docker compose up --build
+```
+
+Stop the services with `docker compose down`. Run the configured Maven test lifecycle with `mvn test`.
+
+The donor API is available on `http://localhost:8080`, and fundraising resources are available on `http://localhost:8081/fundraisings`.
+
+## Documentation
+
+- [Project documentation](docs/README.md)
+- [Target Architecture (HLD)](docs/Target%20Architecture%20%28HLD%29/README.md)
+- [Active HLD container: VolMy API application](docs/Target%20Architecture%20%28HLD%29/v1/Containers/VolMy%20API%20application.md)
+- [System Architecture (LLD)](docs/System%20Architecture%20%28LLD%29/README.md)
+- [VolMy API application component overview](docs/System%20Architecture%20%28LLD%29/VolMy%20API%20application/00%20Overview.md)

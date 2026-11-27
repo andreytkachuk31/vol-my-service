@@ -15,8 +15,7 @@ data/
 .settings
 .classpath
 .factorypath
+.github
 # Artisyn implementation harness: generated state
-.harness/state/objects/
-.harness/state/launch/runs/
-.harness/state/launch/reports/
-.harness/state/launch/package.local.json
+.harness
+docs
