@@ -17,8 +17,10 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -66,7 +68,8 @@ public class FundraisingService {
         final String importId = this.importContext.startNew();
         CompletableFuture.runAsync(() -> {
             List<Fundraising> fundraisings = this.fundraisingParser.parse(file, importId);
-            this.fundraisingRepository.saveAll(fundraisings);
+            List<Fundraising> newFundraisings = filterFundraisingsByUniqueName(fundraisings);
+            fundraisingRepository.saveAll(newFundraisings);
             this.importContext.complete(importId);
         });
         return importId;
@@ -110,5 +113,13 @@ public class FundraisingService {
 
     public void deleteFundraisingsByIds(List<Long> ids) {
         this.fundraisingRepository.deleteFundraisingsByIds(ids);
+    }
+
+    private List<Fundraising> filterFundraisingsByUniqueName(List<Fundraising> fundraisings) {
+        Set<String> seenNames = new HashSet<>();
+        return fundraisings.stream()
+                .filter(fundraising -> seenNames.add(fundraising.getName()))
+                .filter(fundraising -> !fundraisingRepository.existsByName(fundraising.getName()))
+                .collect(Collectors.toList());
     }
 }

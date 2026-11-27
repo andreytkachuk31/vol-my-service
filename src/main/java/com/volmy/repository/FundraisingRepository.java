@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface FundraisingRepository extends JpaRepository<Fundraising, Long> {
 
+    boolean existsByName(String name);
+
     @Transactional
     @Query("DELETE FROM Fundraising fundraising WHERE fundraising.id IN :ids")
     void deleteFundraisingsByIds(List<Long> ids);
